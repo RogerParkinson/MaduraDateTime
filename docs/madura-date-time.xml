@@ -1,0 +1,167 @@
+<?xml-stylesheet 
+			type="text/xsl" href="MaduraHTML.xsl"
+		?>
+
+<doc xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://oss.sonatype.org/content/repositories/releases/nz/co/senanque/maduradocs/6.0.2/maduradocs-6.0.2.xsd">
+	<title>
+		<MainTitle>MaduraDateTime</MainTitle>
+		<SubTitle>User Guide</SubTitle>
+		<Author>Roger Parkinson</Author>
+		<Revision>$Revision: 1$</Revision>
+		<image>logo.jpg</image>
+		<references>
+			<reference t="Apache Licence 2.0" url="http://www.apache.org/licenses/LICENSE-2.0" />
+			<reference t="Spring Framework" url="http://www.springframework.org" />
+			<reference t="slf4j" url="http://www.slf4j.org" />
+			<reference t="Apache License" url="http://www.apache.org/" />
+		</references>
+	</title>
+	<body>
+		<process-log/>
+		<process-references/>
+		<h1 t="Overview">
+		<p>This provides an extensible framework for figuring holiday dates and similar anniversaries. Some of these
+		dates may be mondayised, some not, and some, like Easter, are tricky to calculate.</p>
+		<p>The holidays are configured in an XML file that specifies which days are holidays. A number of generic definition
+		classes are already included but you can add your own calculator for a specific holiday if you need to.</p>
+		<p>The existing definitions handle:</p>
+		<list>
+		<ll name="Absolute">A specific date. This is a one-off holiday that does not recur.</ll>
+		<ll name="Anniversay">A specific date that recurs annually.</ll>
+		<ll name="Mondayised">A specific date that recurs annually, shifted to the nearest Monday. There are switches to handle
+		whether the following, previous or closest Monday is selected.</ll>
+		<ll name="Weekend">Every Saturday and Sunday.</ll>
+		<ll name="Weekday">A specific list of days of the week that are always holidays.</ll>
+		<ll name="GoodFriday">Obvious.</ll>
+		<ll name="EasterSunday">Obvious.</ll>
+		<ll name="EasterMonday">Obvious.</ll>
+		<ll name="ChineseNewYear">Obvious, though this is a crude approach that covers only 1995-2020. I hope to improve it.</ll>
+		<ll name="Generic">Not used?</ll>
+		</list>
+		<p>As the dates are calculated they are cached so that, especially the complex ones, do not need to
+		be re-figured.</p>
+		</h1>
+		<h1 t="Sample">
+		<p>See the tests for a working example. You specify holidays like this:</p>
+		<code><![CDATA[
+<Holidays>
+	<!-- 
+	All dayofweek values are compared with the first three letters, ignoring case
+	Dates (day of month) are based at 1 not zero
+	-->
+	<!-- 
+	calculate Easter Monday for the year the date falls on and see if it is that date 
+	Similarly for Good Friday. Factory takes a reasonable guess at class names for these.
+	Namely it looks for a class of that name, default package is nz.co.senanque.madura.datetime, override as shown
+	-->
+	<EasterMonday/>
+	<EasterSunday/>
+	<GoodFriday class="nz.co.senanque.madura.datetime.holidays.GoodFriday"/>
+	<!-- 
+	take the date given and figure the Mondayised version for this year
+	if that is the date we were given then we have a match
+	the policy attribute is either "FOLLOWING" Monday or "PREVIOUS" Monday or "CLOSEST" (default)
+	-->
+	<Mondayised day="1" month="Jun" policy="FOLLOWING" name="Queen's birthday"/>
+	<Mondayised day="25" month="Oct" name="labour day"/>
+	<Mondayised day="29" month="Jan" name="Auckland anniversary"/>
+	<!-- simple date match for this year -->
+	<Anniversary day="25" month="Dec" name="Christmas"/>
+	<Anniversary day="26" month="Dec" name="Boxing Day"/>
+	<Anniversary day="1" month="Jan" name="new year"/>
+	<Anniversary day="2" month="Jan" name="day after new year"/>
+	<!-- does the date fall on a weekend? -->
+	<Weekend/>
+	<!-- does the date fall on the given weekday? (can be csv list) -->
+	<Weekday dayOfWeek="Wed,Thu"/>
+	<!-- does it fall on this absolute date? Format is strictly as shown ie yyyy-MM-dd -->
+	<Absolute date="2008-08-08"/>
+</Holidays>		
+		]]></code>
+		<p>In this example we defined the following holidays:</p>
+		<list>
+		<le>Every Saturday and Sunday (Weekend)</le>
+		<le>Christmas and Boxing Day, regardless of what day they fall on. If they fall on a weekend no extra days off are given.</le>
+		<le>New Year and the day after. Again if these fall on weekends they are lost.</le>
+		<le>Every Wednesday and Thursday are holidays (I wish!).</le>
+		<le>Good Friday, Easter Sunday and Easter Monday are all holidays. Given that we specified
+		weekends are holidays there is no strict need to specify Easter Sunday as well. Also
+		Good Friday has a class attribute which is also unnecessary but it shows how you can
+		specify your own holiday calculation classes.</le>
+		<le>The Mondayised holidays (you can spell Mondayised with a z if you want) can have a policy
+		qualification as shown. The default policy is CLOSEST.</le>
+		</list>
+		<p>To use this file with Spring you do the following:</p>
+		<code><![CDATA[
+<bean id="holidayCalendar" class="nz.co.senanque.madura.datetime.spring.HolidayCalendarFactoryBean">
+	<property name="document">
+		<bean class="nz.co.senanque.madura.spring.XMLSpringFactoryBean">
+			<property name="fileLocation" value="/Holidays.xml"/>
+		</bean>
+	</property>
+</bean>
+		]]></code>
+		<p>The factory bean delivers a HolidayCalendarImpl with values from the Holidays.xml file.</p>
+		<p>HolidayCalendarImpl implements the HolidayCalendar interface that has one method: isHoliday(java.util.Date).
+		So you can query if any date is a holiday or not.</p>
+		</h1>
+		<a1 t="Licence">
+			<p>The code specific to MaduraDateTime is licenced under the Apache Licence 2.0 <referenceLink t="Apache Licence 2.0"/>.</p>
+			<p>The dependent products have the following licences:</p>
+			<list>
+			<ll name="slf4j">SLF4J License, V1.0</ll>
+			<ll name="maduraconfiguration">Apache Software License, Version 2.0</ll>
+			<ll name="commons-beanutils">Apache Software License, Version 2.0</ll>
+			<ll name="jdom">Apache Software License, Version 2.0</ll>
+			<ll name="Spring Framework">Apache Software License, Version 2.0</ll>
+			<ll name="aopalliance">Public Domain</ll>
+			</list> 
+		</a1>
+		<a1 t="Release Notes">
+		<table width="12cm">
+			<tw>12cm</tw>
+        <tr>
+            <th>1.6</th>
+        </tr>
+        <tr>
+            <td>Migrated to maven build.</td>
+        </tr>
+        <tr>
+            <th>1.5</th>
+        </tr>
+        <tr>
+            <td>Added pom file for maven projects.</td>
+        </tr>
+		<tr>
+			<th>1.3</th>
+		</tr>
+		<tr>
+			<td>Fixed issue with sources hot showing in Eclipse.</td>
+		</tr>
+		<tr>
+			<th>1.2</th>
+		</tr>
+		<tr>
+			<td>Adjusted dependencies to use Spring 3.0.6. Changes in Spring libraries makes this useful.</td>
+		</tr>
+		<tr>
+			<th>1.1</th>
+		</tr>
+		<tr>
+			<td>Some minor docs tidy ups</td>
+		</tr>
+		<tr>
+			<td>Migrated test logging to logback.</td>
+		</tr>
+		<tr>
+			<th>1.0</th>
+		</tr>
+		<tr>
+			<td>Initial version</td>
+		</tr>
+		</table>
+		</a1>
+	</body>
+	
+</doc>
