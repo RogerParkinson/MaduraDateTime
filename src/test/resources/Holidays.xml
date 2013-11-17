@@ -1,0 +1,35 @@
+<Holidays>
+	<!-- 
+	All dayofweek values are compared with the first three letters, ignoring case
+	Dates (day of month) are based at 1 not zero
+	-->
+	<!-- 
+	calculate Easter Monday for the year the date falls on and see if it is that date 
+	Similarly for Good Friday. Factory takes a reasonable guess at class names for these.
+	Namely it looks for a class of that name, default package is nz.co.senanque.madura.datetime, override as shown
+	-->
+	<EasterMonday/>
+	<EasterSunday/>
+	<AnzacDay/>
+	<GoodFriday class="nz.co.senanque.madura.datetime.holidays.GoodFriday"/>
+	<!-- 
+	take the date given and figure the Mondayised version for this year
+	if that is the date we were given then we have a match
+	the policy attribute is either "FOLLOWING" Monday or "PREVIOUS" Monday or "CLOSEST" (default)
+	-->
+	<Mondayised day="1" month="Jun" policy="FOLLOWING" name="Queen's birthday"/>
+	<Mondayised day="25" month="Oct" name="labour day"/>
+	<Mondayised day="29" month="Jan" name="Auckland anniversary"/>
+	<!-- simple date match for this year -->
+	<Anniversary day="25" month="Dec" name="Christmas"/>
+	<Anniversary day="26" month="Dec" name="boxing day"/>
+	<Anniversary day="1" month="Jan" name="new year"/>
+	<Anniversary day="2" month="Jan" name="day after new year"/>
+	<!-- does the date fall on a weekend? -->
+	<Weekend/>
+	<!-- does the date fall on the given weekday? (can be csv list) -->
+	<Weekday dayOfWeek="Wed,Thu"/>
+	<!-- does it fall on this absolute date? Format is strictly as shown ie yyyy-MM-dd -->
+	<Absolute date="2008-08-08"/>
+	<ChineseNewYear/>
+</Holidays>
