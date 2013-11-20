@@ -7,6 +7,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pdf>target/${project.artifactId}-${project.version}.pdf</pdf>
+		<spring.framework.version>3.0.7.RELEASE</spring.framework.version>
 	</properties>
   <description>Allows configuration of holiday dates and a simple API to figure out if a date is a holiday.</description>
   <parent>
@@ -239,7 +240,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.7.RELEASE</version>
+			<version>${spring.framework.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -267,7 +268,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.0.7.RELEASE</version>
+			<version>${spring.framework.version}</version>
 		</dependency>
 	</dependencies>
 </project>
