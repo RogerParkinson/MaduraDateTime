@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nz.co.senanque</groupId>
   <artifactId>madura-date-time</artifactId>
-  <version>1.6.0</version>
+  <version>1.6.1-SNAPSHOT</version>
   <name>MaduraDateTime</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,9 +31,9 @@
 		</developer>
 	</developers>
   <scm>
-  	<url>https://github.com/RogerParkinson/MaduraDateTime/tags/madura-date-time-1.6.0</url>
-  	<connection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime/tags/madura-date-time-1.6.0</connection>
-  	<developerConnection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime/tags/madura-date-time-1.6.0</developerConnection>
+  	<url>https://github.com/RogerParkinson/MaduraDateTime/trunk/</url>
+  	<connection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime/trunk/</connection>
+  	<developerConnection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime/trunk/</developerConnection>
   </scm>
   <issueManagement>
   	<system>GitHub</system>
