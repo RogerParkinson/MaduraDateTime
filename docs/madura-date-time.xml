@@ -1,7 +1,7 @@
 <?xml-stylesheet type="text/xsl" href="MaduraHTML.xsl" ?>
 
 <doc xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://oss.sonatype.org/content/repositories/releases/nz/co/senanque/maduradocs/6.0.4/maduradocs-6.0.4.xsd">
+	xsi:noNamespaceSchemaLocation="http://oss.sonatype.org/content/repositories/releases/nz/co/senanque/maduradocs/6.0.5/maduradocs-6.0.5.xsd">
 	<title>
 		<MainTitle>MaduraDateTime</MainTitle>
 		<SubTitle>User Guide</SubTitle>
