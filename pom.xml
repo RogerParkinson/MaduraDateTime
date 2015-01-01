@@ -31,9 +31,9 @@
 		</developer>
 	</developers>
   <scm>
-  	<url>https://github.com/RogerParkinson/MaduraDateTime/trunk/</url>
-  	<connection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime/trunk/</connection>
-  	<developerConnection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime/trunk/</developerConnection>
+  	<url>https://github.com/RogerParkinson/MaduraDateTime/</url>
+  	<connection>scm:svn:https://github.com/RogerParkinson/MaduraDateTime.git</connection>
+  	<developerConnection>scm:git:ssh://git@github.com:RogerParkinson/MaduraDateTime.git</developerConnection>
   </scm>
   <issueManagement>
   	<system>GitHub</system>
